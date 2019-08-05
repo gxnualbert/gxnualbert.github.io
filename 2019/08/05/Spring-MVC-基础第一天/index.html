@@ -94,4 +94,50 @@
 <p>这个图跟 《springMVC+MyBatis开发出入门到项目实战》第134页中的图一模一样。</p>
 <img src="/2019/08/05/Spring-MVC-基础第一天/1564806869378.png">
 
-<img src="/2019/08/05/Spring-MVC-基础第一天/1564836171187.png"></context:component-scan></div><div class="tags"><a href="/tags/Spring-MVC/">Spring MVC</a></div><div class="post-nav"><a class="next" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/04/使用HEXO搭建博客记录/">使用HEXO搭建博客记录</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<img src="/2019/08/05/Spring-MVC-基础第一天/1564836171187.png">
+
+
+
+<img src="/2019/08/05/Spring-MVC-基础第一天/1564972099971.png">
+<p>1、服务器启动，应用被加载。读取到 web.xml 中的配置创建 spring 容器并且初始化容器中的对象;<br>2、浏览器发送请求，被 DispatherServlet 捕获，该 Servlet 并不处理请求，而是把请求转发出去转发的路径是根据请求 URL，匹配@RequestMapping 中的内容;<br>3、匹配到了后，执行对应方法。该方法有一个返回值;<br>4、根据方法的返回值，借助 InternalResourceViewResolver 找到对应的结果视图;<br>5、渲染结果视图，响应浏览器。</p>
+<img src="/2019/08/05/Spring-MVC-基础第一天/1564972372755.png">
+
+
+
+<p><strong>DispatcherServlet **  **: 前端控制器</strong></p>
+<p>用户请求到达前端控制器，它就相当于 mvc 模式中的 c，dispatcherServlet 是整个流程控制的中心，由它调用其它组件处理用户的请求，dispatcherServlet 的存在降低了组件之间的耦合性。</p>
+<p><strong>HandlerMapping ** **：处理器映射器</strong></p>
+<p>HandlerMapping 负责根据用户请求找到 Handler 即处理器，SpringMVC 提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等.</p>
+<p><strong>Handler</strong> <strong>：处理器</strong></p>
+<p>它就是我们开发中要编写的具体业务控制器。由 DispatcherServlet 把用户请求转发到 Handler。由Handler 对具体的用户请求进行处理。</p>
+<p><strong>HandlAdapter</strong> <strong>：处理器适配器</strong></p>
+<p>通过 HandlerAdapter 对处理器进行执行，这是适配器模式的应用，通过扩展适配器可以对更多类型的处理 器进行执行。</p>
+<p><strong>View Resolver</strong> <strong>：视图解析器</strong></p>
+<p>View Resolver 负责将处理结果生成 View 视图，View Resolver 首先根据逻辑视图名解析成物理视图名即具体的页面地址，再生成 View 视图对象，最后对 View 进行渲染将处理结果通过页面展示给用户。</p>
+<p><strong>View</strong> <strong>：视图</strong></p>
+<p>SpringMVC 框架提供了很多的 View 视图类型的支持，包括：jstlView、freemarkerView、pdfView 等。我们最常用的视图就是 jsp。 一般情况下需要通过页面标签或页面模版技术将模型数据通过页面展示给用户，需要由程序员根据业务需求开发具体的页面。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span>说明</span><br><span class="line"></span><br><span class="line">在 SpringMVC 的各个组件中，处理器映射器、处理器适配器、视图解析器称为 SpringMVC 的三大组件。 使 用 <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span> 自动加载 RequestMappingHandlerMapping （处理映射器） 和RequestMappingHandlerAdapter （ 处 理 适 配 器 ） ， 可 用 在 SpringMVC.xml 配 置 文 件 中 使 用 <span class="tag">&lt;<span class="name">mvc:annotation-driven</span>&gt;</span>替代注解处理器和适配器的配置。</span><br></pre></td></tr></table></figure>
+
+<p><strong>RequestMapping</strong> <strong>注解</strong></p>
+<p>用于建立请求 URL 和处理请求方法之间的对应关系.</p>
+<p><strong>属性：</strong> </p>
+<p>1.value：用于指定请求的 URL。它和 path 属性的作用是一样的。 </p>
+<p>2.method：用于指定请求的方式。 </p>
+<p>3.params：用于指定限制请求参数的条件。它支持简单的表达式。要求请求参数的 key 和 value 必须和配置的一模一样。</p>
+<p>​    例如： </p>
+<p>​    params = {“accountName”}，表示请求参数必须有 accountName </p>
+<p>​    params = {“moeny!100”}，表示请求参数中 money 不能是 100。 </p>
+<p>4.headers：用于指定限制请求消息头的条件。</p>
+<p>SpringMVC 绑定请求参数是自动实现的，但是要想使用，必须遵循使用要求。</p>
+<p>​    <strong>如果是基本类型或者</strong> <strong>String</strong> <strong>类型：</strong> </p>
+<p>要求我们的参数名称必须和控制器中方法的形参名称保持一致。(严格区分大小写) </p>
+<p>​    <strong>如果是</strong> <strong>POJO</strong> <strong>类型，或者它的关联对象：</strong> </p>
+<p>要求表单中参数名称和 POJO 类的属性名称保持一致。并且控制器方法的参数类型是 POJO 类型。 </p>
+<p>​    <strong>如果是集合类型</strong> <strong>, ** **有两种方式：</strong></p>
+<p>​    第一种： </p>
+<p>​        要求集合类型的请求参数必须在 POJO 中。在表单中请求参数名称要和 POJO 中集合属性名称相同。 </p>
+<p>​        给 List 集合中的元素赋值，使用下标。 </p>
+<p>​        给 Map 集合中的元素赋值，使用键值对。 </p>
+<p>​    第二种： </p>
+<p>​        接收的请求参数是 json 格式数据。需要借助一个注解实现。 </p>
+</context:component-scan></div><div class="tags"><a href="/tags/Spring-MVC/">Spring MVC</a></div><div class="post-nav"><a class="next" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/04/使用HEXO搭建博客记录/">使用HEXO搭建博客记录</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
