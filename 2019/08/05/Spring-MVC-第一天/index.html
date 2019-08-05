@@ -1,0 +1,124 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Spring MVC 第一天 | gxnualbert</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Spring MVC 第一天</h1><a id="logo" href="/.">gxnualbert</a><p class="description">触底反弹，奋力前行，加油！</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Spring MVC 第一天</h1><div class="post-meta">Aug 5, 2019</div><div class="post-content"><p>如何把一个项目发布到Tomcat中？</p>
+<p>怎么把一个项目或者文件，放到tomcat中，让别人通过浏览器就能进行访问，主要有三种方法：</p>
+<p>​    需求： 如何能让其他的电脑访问我这台电脑上的资源 hello.txt？</p>
+<p><a href="http://localhost:8080/hello.txt" target="_blank" rel="noopener">http://localhost:8080/hello.txt</a></p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192331628.png">
+
+<p>如上所示，通过浏览器即可访问我电脑上的资源</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">使用IP地址访问：</span><br><span class="line">http://localhost:8080 ： 其实对应的是到webapps/root</span><br><span class="line">http://localhost:8080/xml/ : 对应是 webapps/xml</span><br></pre></td></tr></table></figure>
+
+<p>配置虚拟路径的第一种方式</p>
+<p>在conf/server.xml 找到host元素节点，加入以下内容：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Context</span>    <span class="attr">path</span>=<span class="string">"/hello"</span>   <span class="attr">docBase</span>=<span class="string">"D:\soft\apache-tomcat-7.0.94\xml02"</span>     <span class="attr">debug</span>=<span class="string">"0"</span>    <span class="attr">privileged</span>=<span class="string">"true"</span>&gt;</span>      <span class="tag">&lt;/<span class="name">Context</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，docBase是真实的文件路径，path是浏览器中访问的路径。</p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192314503.png">
+
+<p>浏览器访问如下：</p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192301851.png">
+
+
+
+<p>配置虚拟路径第二种方式</p>
+<p>在tomcat/conf/catalina/localhost/ 文件夹下新建一个xml文件，名字可以自己定义（我这里叫“virtual_path_seconde_way.xml”），这个名字也是后面浏览器中访问地址的一部分。</p>
+<p>virtual_path_seconde_way.xml的内容：</p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192283101.png">
+
+<p>重启tomcat，然后在浏览器中访问：</p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192262912.png">
+
+
+
+<p>二进制数系统中，每个0或1就是一个位，叫做bit（比特）。</p>
+<p>字节是我们常见的计算机中最小存储单元。计算机存储任何的数据，都是以字节的形式存储，右键点击文件属性， </p>
+<p>我们可以查看文件的字节大小。 </p>
+<p>8个bit（二进制位） 0000-0000表示为1个字节，写成<strong>1 byte</strong>或者<strong>1 B</strong>。</p>
+<p>Java程序开发三步骤：<strong>编写</strong>、<strong>编译</strong>、<strong>运行</strong>。</p>
+<img src="/2019/08/05/Spring-MVC-第一天/1563192241361.png">
+
+<p>第一个 HelloWord 源程序就编写完成了，但是这个文件是程序员编写的，JVM是看不懂的，也就不能运行，因此我 们必须将编写好的 Java源文件 编译成JVM可以看懂的 字节码文件 。 </p>
+<p><strong>编译和运行是两回事</strong></p>
+<p>​    <strong>编译</strong>：是指将我们编写的Java源文件翻译成JVM认识的class文件，在这个过程中， javac 编译器会检查我们 </p>
+<p>所写的程序是否有错误，有错误就会提示出来，如果没有错误就会编译成功。 </p>
+<p>​    <strong>运行</strong>：是指将 class文件 交给JVM去运行，此时JVM就会去执行我们编写的程序了。 </p>
+<p>​    <strong>main</strong>方法<strong>：称为主方法。写法是</strong>固定格式**不可以更改。main方法是程序的入口点或起始点，无论我们编写多 少程序，JVM在运行的时候，都会从main方法这里开始执行。 </p>
+<p>​    Java程序中要求参与的计算的数据，必须要保证数据类型的一致性，如果数据类型不一致将发生类型的转换。</p>
+<p>​    一个 int 类型变量和一个 byte 类型变量进行加法运算，结果是变量的类型将是 int 类型，这就是出现了数据类型的自动类型转换现象。</p>
+<p>·    <strong>自动转换</strong>：将 取值范围小的类型 自动提升为 取值范围大的类型 。</p>
+<p>​    范围小的类型向范围大的类型提升， byte、short、char 运算时直接提升为 int</p>
+<p>​    byte、short、char‐‐&gt;int‐‐&gt;long‐‐&gt;float‐‐&gt;double</p>
+<p>​    将 1.5 赋值到 int 类型变量会发生什么？产生编译失败，肯定无法赋值。double 类型内存8个字节， int 类型内存4个字节。 1.5 是 double 类型，取值范围大于 int 。可以理解为 double 是8 升的水壶， int 是4升的水壶，不能把大水壶中的水直接放进小水壶去。想要赋值成功，只有通过强制类型转换，将 double 类型强制转换成 int 类型才能赋值。</p>
+<p>​    <strong>强制类型转换</strong>：将 取值范围大的类型 强制转换成 取值范围小的类型 。</p>
+<p>​    自动转换是Java自动执行的，而强制转换需要我们自己手动执行。</p>
+<p>​    在计算机的内部都是二进制的0、1数据，如何让计算机可以直接识别人类文字的问题呢？就产生出了编码表的概念。</p>
+<p>​    <strong>编码表</strong> ：就是将人类的文字和一个十进制数进行对应起来组成一张表格。</p>
+<p>​    将所有的英文字母，数字，符号都和十进制进行了对应，因此产生了世界上第一张编码表ASCII。</p>
+<p>​    在char类型和int类型计算的过程中，char类型的字符先查询编码表，得到97，再和1求和，结果为98。char类型提升 为了int类型。char类型内存2个字节，int类型内存4个字节。</p>
+<h3 id="第二章-运算符"><a href="#第二章-运算符" class="headerlink" title="第二章 运算符"></a>第二章 运算符</h3><p>​    &amp;&amp; 短路与的特点：符号左边是false，右边不再运算</p>
+<p>​    || 短路或的特点： 符号左边是true，右边不再运算</p>
+<p>​    <strong>方法重载</strong>：指在同一个类中，允许存在一个以上的同名方法，只要它们的参数列表不同（个数不同，数据类型不同，顺序不同）即可，与修饰符和返 回值类型无关。JVM通过方法的参数列表，调用不同的方法。</p>
+<h3 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h3><p>​    <strong>容器：</strong>是将多个数据存储到一起，每个数据称为该容器的元素。</p>
+<p>​    <strong>生活中的容器：</strong>水杯，衣柜，教室</p>
+<p>​    <strong>数组概念：</strong> 数组就是存储数据长度固定的容器，保证多个数据的数据类型要一致。</p>
+<p>​    <strong>数组有定长特性，长度一旦指定，不可更改。</strong>和水杯道理相同，买了一个2升的水杯，总容量就是2升，不能多也不能少。</p>
+<p>​    内存是计算机中的重要原件，临时存储区域，作用是运行程序。我们编写的程序是存放在硬盘中的，在硬盘中的程序是不会运行的，必须放进内存中才能运行，运行完毕后会清空内存。 Java虚拟机要运行程序，必须要对内存进行空间的分配和管理。</p>
+<p>​    JVM的内存划分：</p>
+<p>​        寄存器 ：给CPU使用，和我们开发无关</p>
+<p>​        本地方法栈：JVM在使用操作系统功能的时候使用，和我们开发无关</p>
+<p>​        方法区：存储可以运行的class文件</p>
+<p>​        堆内存：存储对象或者数组，new来创建的，都存储在堆内存</p>
+<p>​        方法栈：方法运行时使用的内存，比如main方法运行，进入方法栈中执行。</p>
+<p>​    <strong>数组作为方法参数传递，传递的参数是数组内存的地址</strong></p>
+<p>​    数组作为方法的返回值，返回的是数组的内存地址</p>
+<h3 id="day06【类与对象、封装、构造方法】"><a href="#day06【类与对象、封装、构造方法】" class="headerlink" title="day06【类与对象、封装、构造方法】"></a>day06【类与对象、封装、构造方法】</h3><p>​    类是对一类事物的描述，是<strong>抽象的</strong>；对象是一类事物的实例，是<strong>具体的</strong>；<strong>类是对象的模板，对象是类的实体</strong></p>
+<p>​    引用类型作为参数，传递的是地址值。</p>
+<p>封装的步骤：1.. 使用 private 关键字来修饰成员变量；2.对需要访问的成员变量，提供对应的一对 getXxx 方法 、 setXxx 方法。被private修饰后的成员变量和成员方法，只在本类中才能访问。</p>
+<p>​    方法被哪个对象调用，方法中的this就代表那个对象。即谁在调用，this就代表谁。使用 this 修饰方法中的变量，解决成员变量被隐藏的问题。</p>
+<p>​    如果你不提供构造方法，系统会给出无参数构造方法。</p>
+<p>​    如果你提供了构造方法，系统将不再提供无参数构造方法</p>
+<p>​    构造方法是可以重载的，既可以定义参数，也可以不定义参数</p>
+<p>​    new Scanner(System.in).nextInt();一个匿名对象，只能使用一次。</p>
+<p>​     <e>，表示一种指定的数据类型，叫做泛型。 E ，取自Element（元素）的首字母。在出现 E 的地方，我们使 用一种引用数据类型将其替换即可，表示我们将存储哪种引用类型的元素.</e></p>
+<p>​    ArrayList对象不能存储基本类型，只能存储引用类型的数据,但是存储基本数据类型对应的包装类型是可以的。</p>
+<p>​    java.lang.String 类代表字符串。Java程序中所有的字符串文字（例如 “abc” ）都可以被看作是实现此类的实 </p>
+<p>例.</p>
+<p>​    字符串不变：字符串的值在创建后不能被更改.因为String对象是不可变的，所以它们可以被共享.String s1 = “abc”;String s2 = “abc”;内存中只有一个”abc”对象被创建，同时被s1和s2共享。</p>
+<p>​    被static修饰的成员是<strong>属于类</strong>的,既然属于类，就可以不靠创建对象来调用了.</p>
+<p>​    比如说，基础班新班开班，学员报到。现在想为每一位新来报到的同学编学号（sid），从第一名同学开始，sid为 1，以此类推。学号必须是唯一的，连续的，并且与班级的人数相符，这样以便知道，要分配给下一名新同学的学 号是多少。这样我们就需要一个变量，与单独的每一个学生对象无关，而是与整个班级同学数量有关。所以，我们可以这样定义一个静态变量numberOfStudent。</p>
+<p>​    static 修饰的内容：</p>
+<p>​        是随着类的加载而加载的，且只加载一次；</p>
+<p>​        存储于一块固定的内存区域（静态区），所以，可以直接被类名调用；</p>
+<p>​        它优先于对象存在，所以，可以被所有对象共享。    </p>
+<p>​    多个类中存在相同属性和行为时，将这些内容抽取到单独一个类中，那么多个类无需再定义这些属性和行为，只要 继承那一个类即可。继承描述的是事物之间的所属关系，这种关系是： is-a 的关系。例如，兔子is食草动物，食草动物is动 物。可见，父类更通用，子类更具体。我们通过继承，可以使多种事物之间形成一种关系体系。 子类可以直接 访问被继承的父类中的<strong>非私有</strong>的属性和行为。</p>
+<p>​    继承的好处：类与类之间产生了关系，是<strong>多态的前提</strong>。</p>
+<h4 id="当类之间产生了关系后，其中各类中的成员变量，又产生了哪些影响呢？"><a href="#当类之间产生了关系后，其中各类中的成员变量，又产生了哪些影响呢？" class="headerlink" title="当类之间产生了关系后，其中各类中的成员变量，又产生了哪些影响呢？"></a>当类之间产生了关系后，其中各类中的成员变量，又产生了哪些影响呢？</h4><p>​    1.如果子类父类中出现<strong>不重名</strong>的成员变量，这时的访问是<strong>没有影响的</strong>。</p>
+<p>​    2.如果子类父类中出现<strong>重名</strong>的成员变量，这时的访问是<strong>有影响的</strong>。</p>
+<p>​        子父类中出现了同名的成员变量时，在子类中需要访问父类中非私有成员变量时，需要使用 super 关键字，修饰父类成员变量，格式为：super.父类成员变量名。 类似于之前学过的 this 。    </p>
+<p>​    Fu 类中的成员变量是非私有的，子类中可以直接访问。若Fu 类中的成员变量私有了，子类是不能</p>
+<p>直接访问的。通常编码时，我们遵循封装的原则，使用private修饰成员变量，那么如何访问父类的私有成员<br>变量呢？对！可以在父类中提供公共的getXxx方法和setXxx方法。</p>
+<p>​    3.如果子类父类中出现<strong>不重名</strong>的成员方法，这时的调用是<strong>没有影响的</strong>。</p>
+<p>​        对象调用方法时，会先在子类中查找有没有对 应的方法，若子类中存在就会执行子类中的方法，若子类中不存在就会执行父类中相应的方法。</p>
+<p>​    4.如果子类父类中出现<strong>重名</strong>的成员方法，这时的访问是一种特殊情况，叫做<strong>方法重写</strong> (Override)</p>
+<p>​        <strong>方法重写</strong> ：子类中出现与父类一模一样的方法时（返回值类型，方法名和参数列表都相同），会出现覆盖效果，也称为重写或者复写。<strong>声明不变，重新实现</strong>。 重写的应用：子类可以根据需要，定义特定于自己的行为。既沿袭了父类的功能名称，又根据子类的需要重新实现父类方法，从 而进行扩展增强。比如新的手机增加来电显示头像的功能。</p>
+<p>​    子类方法覆盖父类方法，必须要保证权限大于等于父类权限；</p>
+<p>​    子类方法覆盖父类方法，返回值类型、函数名和参数列表都要一模一样</p>
+<h4 id="当类之间产生了关系，其中各类中的构造方法，又产生了哪些影响呢？"><a href="#当类之间产生了关系，其中各类中的构造方法，又产生了哪些影响呢？" class="headerlink" title="当类之间产生了关系，其中各类中的构造方法，又产生了哪些影响呢？"></a>当类之间产生了关系，其中各类中的构造方法，又产生了哪些影响呢？</h4><p>​    首先我们要回忆两个事情，构造方法的定义格式和作用：</p>
+<p>​        1.构造方法的名字是与类名一致的。所以子类是无法继承父类构造方法的</p>
+<p>​        2.构造方法的作用是初始化成员变量的。所以子类的初始化过程中，必须先执行父类的初始化动作。子类的构造方法中默认有一个 super() ，表示调用父类的构造方法，父类成员变量初始化后，才可以给子类使用。</p>
+<p>​    子类的每个构造方法中均有默认的super()，调用父类的空参构造。手动调用父类构造会覆盖默认的super()。 </p>
+<p>super() 和 this() 都必须是在构造方法的第一行，所以不能同时出现。</p>
+<p>​    Java只支持单继承，不支持多继承；Java支持多层继承(继承体系)。顶层父类是Object类。所有的类默认继承Object，作为父类。</p>
+<p>​    父类中的方法，被它的子类们重写，子类各自的实现都不尽相同。那么父类的方法声明和方法主体，只有声明还有 意义，而方法主体则没有存在的意义了。我们把没有方法主体的方法称为<strong>抽象方法</strong>。Java语法规定，包含抽象方法 的类就是<strong>抽象类.</strong></p>
+<p>​    <strong>抽象方法</strong> ： 没有方法体的方法;<strong>抽象类</strong>：包含抽象方法的类</p>
+<p>​    使用 abstract 关键字修饰方法，该方法就成了抽象方法，抽象方法只包含一个方法名，而没有方法体。</p>
+<p>​    如果一个类包含抽象方法，那么该类必须是抽象类</p>
+<p>​    继承抽象类的子类<strong>必须重写父类所有的抽象方法</strong>。否则，该子类也必须声明为抽象类。</p>
+<p>​    抽象类<strong>不能创建对象</strong>，如果创建，编译无法通过而报错。只能创建其非抽象子类的对象.</p>
+<p>​    抽象类中，可以有构造方法，是供子类创建对象时，初始化父类成员使用的。</p>
+<p>​    抽象类中，不一定包含抽象方法，但是有抽象方法的类必定是抽象类</p>
+<p>​    抽象类的子类，必须重写抽象父类中<strong>所有的</strong>抽象方法，否则，编译无法通过而报错。除非该子类也是抽象 </p>
+<p>类。 </p>
+<p>​    引用数据类型：数组，类，接口。</p>
+<p>​    接口中，有多个抽象方法时，实现类必须重写所有抽象方法<strong>。如果抽象方法有重名的，只需要重写一次。</strong></p>
+<p>​    <strong>多态</strong>： 是指同一行为，具有多个不同表现形式。</p>
+</div><div class="tags"><a href="/tags/Spring-MVC/">Spring MVC</a></div><div class="post-nav"><a class="next" href="/2019/08/04/使用HEXO搭建博客记录/">使用HEXO搭建博客记录</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/04/使用HEXO搭建博客记录/">使用HEXO搭建博客记录</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
