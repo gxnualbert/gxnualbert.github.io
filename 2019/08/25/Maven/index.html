@@ -1,0 +1,44 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta name="generator" content="Hexo 3.9.0"><meta http-equiv="content-type" content="text/html; charset=utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black-translucent" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="description"><title>Maven | gxnualbert</title><link rel="stylesheet" type="text/css" href="/css/style.css?v=0.0.0"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/normalize/8.0.1/normalize.min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/pure-min.css"><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/pure/1.0.0/grids-responsive-min.css"><link rel="stylesheet" href="//lib.baomitu.com/font-awesome/4.7.0/css/font-awesome.min.css"><script type="text/javascript" src="//lib.baomitu.com/jquery/3.4.0/jquery.min.js"></script><link rel="icon" mask sizes="any" href="/favicon.ico"><link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico"><link rel="apple-touch-icon" href="/apple-touch-icon.png"><link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png"></head><body><div class="body_container"><div id="header"><div class="site-name"><h1 class="hidden">Maven</h1><a id="logo" href="/.">gxnualbert</a><p class="description">触底反弹，奋力前行，加油！</p></div><div id="nav-menu"><a class="current" href="/."><i class="fa fa-home"> 首页</i></a><a href="/archives/"><i class="fa fa-archive"> 归档</i></a><a href="/about/"><i class="fa fa-user"> 关于</i></a><a href="/atom.xml"><i class="fa fa-rss"> 订阅</i></a></div></div><div class="pure-g" id="layout"><div class="pure-u-1 pure-u-md-3-4"><div class="content_container"><div class="post"><h1 class="post-title">Maven</h1><div class="post-meta">Aug 25, 2019</div><div class="post-content"><p>Maven 高级</p>
+<p>Maven 导入Jar包时冲突</p>
+<p>在IDEA中显示jar包之间的依赖关系，点击maven中的组织按钮，如下：</p>
+<p>&lt;% asset_img 1566695202199.png%&gt;</p>
+<p>Maven工程要导入jar包的坐标 ，就必须要考虑解决jar包冲突。</p>
+<p>解决冲突方式1：第一声明有限原则。那个jar包的坐标在靠上的位置，这个jar包就是先声明的。先声明的jar包坐标下的依赖包，可以优先进入项目中。</p>
+<p>解决冲突方式2：</p>
+<p>直接依赖：项目中直接导入的jar包，就是该项目的直接依赖包。</p>
+<p>传递依赖：项目中没有直接导入的jar包，可以通过项目直接依赖jar包传递到项目中。</p>
+<p>解决冲突方式3：当我们需要排除某个jar包下依赖包，在配置exclusions标签的时候，内部可以不写版本号，因为此时依赖包使用的版本和默认版本是一样的。</p>
+<p>exclusions标签，排除依赖。</p>
+<p>maven工程师可以分父子依赖关系的，也就是说，我一个项目，可以依赖于另外一个项目。凡是依赖别的项目后，拿到别的项目的依赖包，都属于传递依赖。</p>
+<p>比如，当前A项目，被B项目依赖（也就是B项目依赖A项目），那么我们A项目中所有的jar包都会传递到B项目中，B项目开发者，如果再在B项目中导入一套ssm框架的jar包，由于这些jar包对B项目来说是直接依赖，所以这些直接依赖会把A中的传递依赖给覆盖掉。</p>
+<p>为了防止以上情况的发生，我们可以把A项目中主要jar包的坐标锁住，那么其他依赖该项目的项目中，即便是有同名jar包直接依赖，也无法覆盖。如果我们把A项目的jar包锁住，那么B项目就无法覆盖了，即使那些jar包在B中是直接依赖的。</p>
+<p>如何锁定jar包？新增一个dependencyManagement标签对，里面写的内容跟dependency的一样。</p>
+<p>J:\计算机视频教程\IDEA开发优先学习2019黑马javaee57期完整版\阶段3 5.Maven高级·\01.maven分模块构建下的06案例dao层代码编写.flv 讲了mybatis怎么整合Spring，讲得比较好。这个讲maven的，基本都包含了dao，service，web，比较综合，还讲了spring 声明式事务。</p>
+<p>maven解决代码可重用和便于维护问题上，是这么解决的：</p>
+<p>maven把一个完整的项目，拆分成不同的独立模块，这些模块都有各自独立的坐标，哪个地方 需要其中某个模块，就直接引用该模块坐标即可。这个说的就是maven的拆分思想。以前蛋贝就是拆分成很多个模块的。比如，iot-manager，上面的dms-service，管家服务，等等。</p>
+<p>​    今后如果公司开发一个新项目，我们需要考虑一下，dao，service， utils，domain，这些模块是否已存在，并能直接引用，这样，就能节省开发的工作量。</p>
+<p>maven的聚合思想：将拆分零散的模块聚合到一起编写一个完整的项目。</p>
+<p>父工程，其实只要一个pom.xml就可以了，不管你选new project 还是new module都可以。</p>
+<p>new子工程（dao项目）的时候，因为是Java工程，用不用maven模板都无所谓了，因为它就是一个普通的Java工程</p>
+<p>父子工程跟其他普通maven工程的区别</p>
+<p>父工程中，多了子工程的module，如图：</p>
+<p>&lt;% asset_img 1566695747351.png%&gt;</p>
+<p>子工程中，多了父工程的信息，子工程可以共用父工程的version，还有group id。</p>
+<p>&lt;%asset_img 1566695537881.png%&gt;</p>
+<p>工程（project）和模块（module）的区别</p>
+<p>工程不等于完整的项目；模块也不等于完整的项目。一个完整的项目，看的是代码。代码完整，就可以说这是一个完整的项目。一个完整的项目，和此项目是工程和模块没有关系。举例说明如下：</p>
+<p>&lt;%asset_img 1566699534311.png%&gt;</p>
+<p>如下，创建了一个工程，但是一行代码都没写，这个时候，你敢称这个工程就是一个项目？所以说，工程不等于完整的项目。</p>
+<p>&lt;%asset_img 1566699636505.png%&gt;</p>
+<p>工程天生只能使用自己内部资源，工程天生是独立的。后天可以和其他工程或模块建立关联关系。</p>
+<p>模块天生不是独立的，模块天生是属于父工程的，模块一旦创建，所有父工程的资源都可以使用。</p>
+<p>形象的例子：整个父工程，就是一个班级；子模块就是班级的每一个学生，只要你属于整个班，那么班里的公共资源都能使用。比如说，班级有个垃圾桶，班里所有的学生都能使用。班里的空调，电风扇等公共物品，班里的学生都能使用。</p>
+<p>工程天生没有父工程（即父pom文件）</p>
+<p>父子工程之间：子模块天生继承父工程，可以使用父工程的所有资源；</p>
+<p>子模块之间天生是没有任何关系的。就像班级里新来的同学，刚刚开始，谁都不认识谁。但是，经过一段时间学习，了解之后，彼此认识了，就会产生关系了。比如，service将来肯定要和dao建立关系，不然service怎么获取数据库数据呢。那service怎么用dao的数据呢？在service 的pom文件中，直接引用dao的pom坐标即可。</p>
+<p>父子工程直接不用建立关系，继承关系是 先天的，不需要手动建立。</p>
+<p>平级直接的引用叫依赖，依赖是需要后天建立的。</p>
+<p>一般情况下，直接依赖的作用域就是compile，可以省略<scope>.在实际开发中，如果发现一个包不能使用（即传递依赖丢失），他的表现形式是jar包的坐标导不进去。解决办法：直接再导入一次。</scope></p>
+<p>IDEA中创建目录的时候，使用/,而不是. 如：com/gxnuablert/spring, 而不是com.gxnualbert.spring</p>
+<p>了解私服</p>
+</div><div class="tags"><a href="/tags/Maven/">Maven</a></div><div class="post-nav"><a class="next" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/spring-junit/" style="font-size: 15px;">spring-junit</a> <a href="/tags/ssm/" style="font-size: 15px;">ssm</a> <a href="/tags/MuseScore/" style="font-size: 15px;">MuseScore</a> <a href="/tags/各种快捷键/" style="font-size: 15px;">各种快捷键</a> <a href="/tags/常用注解/" style="font-size: 15px;">常用注解</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/SSM主流框架集成/">SSM主流框架集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/10/常用注解/">常用注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/Spring整合Junit配置/">Spring整合Junit配置 </a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/SpringMVC-Spring-Mybatis-整合/">SpringMVC Spring Mybatis 整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/常用快捷键/">常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-第一天/">Spring MVC 第一天</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/04/使用HEXO搭建博客记录/">使用HEXO搭建博客记录</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
