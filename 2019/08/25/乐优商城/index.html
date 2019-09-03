@@ -20,89 +20,137 @@
 <img src="/2019/08/25/乐优商城/1567392048840.png">
 
 <p>选择edit json，就 弹出如下编辑框，我们在下面直接写json，idea会帮我们自动转义</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567391743652.png" alt="1567391743652"></p>
+<img src="/2019/08/25/乐优商城/1567391743652.png">
+
 <p>ResponseBody 和ResponseEntity区别</p>
 <p>ResponseBody 响应体，作用是把Java对象序列化（默认是json），放到body里面去，但是不包含响应码；ResponseEntity是一个完整的http响应，里面包括响应码，响应体，header，，它是一个完整的http响应。</p>
 <p>统一异常处理：把所有的异常都拦截下来，自己处理。把所有controller的异常都拦截下来，把web层异常拦截下来，基本所有异常都已经被拦截下来了。—–&gt;AOP思想，可以用AOP，也可以用spring的mvc</p>
 <p>@ControllerAdvice 默认情况下，自动拦截所有的controller</p>
 <p>自定义异常</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567397608531.png" alt="1567397608531"></p>
+<img src="/2019/08/25/乐优商城/1567397608531.png">
+
+
+
 <h4 id="自定义异常的引入"><a href="#自定义异常的引入" class="headerlink" title="自定义异常的引入"></a>自定义异常的引入</h4><p>有时候，在controller层，当客户端发送过来的请求，不包含价格时（正确的请求应该是名称+价格）。我们需要校验客户端发送过来的请求参数是否完整，并且合法，如果不合法，直接抛出异常返回给客户端，并告知请求失败原因。大概的思路有两种：1采用aop思想，拦截所有controller的请求，然后对请求参数进行校验；2采用springmvc自带的异常拦截，自定义异常实现类。</p>
 <p>一般用枚举对异常进行描述，如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567398561837.png" alt="1567398561837"></p>
+<img src="/2019/08/25/乐优商城/1567398561837.png">
+
 <p>由于我们返回给客户端是一个完整的http请求，所以不能用responsebody，要用ResponseEntity（包含请求行，请求头，请求体，状态码）</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567398673997.png" alt="1567398673997"></p>
+<img src="/2019/08/25/乐优商城/1567398673997.png">
+
+
+
 <p>总体是思路（上图）：@ControllerAdvice注解下的类，将会拦截所有controller的异常，然后交给@ExceptionHandler处理，处理完后，返回一个ResponseEntity包含请求行，请求头，请求体，状态码）。</p>
 <h4 id="Nginx以及品牌管理"><a href="#Nginx以及品牌管理" class="headerlink" title="Nginx以及品牌管理"></a>Nginx以及品牌管理</h4><p>域名解析问题–Nginx–</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567399152001.png" alt="1567399152001"></p>
+<img src="/2019/08/25/乐优商城/1567399152001.png">
+
+
+
 <p>访问浏览器的时候，通过IP地址访问不好，应该使用域名访问。</p>
 <p>提供给客户使用的是<a href="http://www.leyou.com(一级域名),而后台管理系统，使用manage.leyou.com(二级域名)。在浏览器中输入域名的时候，浏览器DNS会将域名解析成IP和端口，浏览器实际拿到的也是ip和端口" target="_blank" rel="noopener">www.leyou.com(一级域名),而后台管理系统，使用manage.leyou.com(二级域名)。在浏览器中输入域名的时候，浏览器DNS会将域名解析成IP和端口，浏览器实际拿到的也是ip和端口</a></p>
 <p>域名解析：先本地host文件解析，如果解析成功，就返回给浏览器；如果解析失败，就去请求域名解析服务器。</p>
 <p>Nginx静态资源服务器（js，css）Nginx不能解析jsp等页面，只能处理js、css、html等静态资源。</p>
 <p>Tomcat动态资源服务器</p>
 <p>make &amp;&amp; make install: &amp;&amp; 是短路与，第一个成功，执行第二个；第一个失败，不执行第二个。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567402787331.png" alt="1567402787331"></p>
+<img src="/2019/08/25/乐优商城/1567402787331.png">
+
 <p>如图，Nginx启动成功之后，有两个进程，master（主进程）的作用是监控和管理；worker（工作进程）的作用是处理用户的请求并且响应。</p>
 <p>service IPtable off：关闭防火墙。</p>
 <p>管道是Linux命令中重要的一个概念，其作用是将一个命令的输出用作另一个命令的输入</p>
 <p>Nginx配置文件：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567410285376.png" alt="1567410285376"></p>
+<img src="/2019/08/25/乐优商城/1567410285376.png">
+
 <p>如果请求的链接一个都匹配不上Nginx中的地址，则使用Nginx配置文件中，第一个server作为匹配结果。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567410477698.png" alt="1567410477698"></p>
+<img src="/2019/08/25/乐优商城/1567410477698.png">
+
 <p>Nginx -s reload 重新加载配置文件</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567412025248.png" alt="1567412025248"></p>
+<img src="/2019/08/25/乐优商城/1567412025248.png">
+
 <p>浏览器发起域名(manage.leyou.com)请求,然后经过本地域名解析，拿到的ip是192.168.58.101，由于请求的时候，没加端口，所以，默认端口是80.因此，经过域名解析后，浏览器就拿到了完整ip，port。</p>
 <p>浏览器向192.168.58.101:80发起请求，被Nginx监听到了，Nginx根据配置文件的配置，反向代理，将请求转发到192.168.58.2:9001去。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567412184923.png" alt="1567412184923"></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567412490975.png" alt="1567412490975"></p>
+<img src="/2019/08/25/乐优商城/1567412184923.png">
+
+
+
+<img src="/2019/08/25/乐优商城/1567412490975.png">
+
+
+
 <p>配置VMware 的centos网络，让Windows的xshell能连接</p>
 <p>参考连接<a href="https://www.cnblogs.com/shireenlee4testing/p/9469650.html，配置好虚拟机网络。" target="_blank" rel="noopener">https://www.cnblogs.com/shireenlee4testing/p/9469650.html，配置好虚拟机网络。</a></p>
 <p>然后参考连接<a href="https://www.cnblogs.com/sunlong88/articles/9195909.html，配置好centos里面的网络配置文件，如下：" target="_blank" rel="noopener">https://www.cnblogs.com/sunlong88/articles/9195909.html，配置好centos里面的网络配置文件，如下：</a></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567414582972.png" alt="1567414582972"></p>
+<img src="/2019/08/25/乐优商城/1567414582972.png">
+
+
+
 <p>centos 编译安装Nginx</p>
 <p>./configure –prefix=/usr/local/nginx –sbin-path=/usr/bin/nginx</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567417968565.png" alt="1567417968565"></p>
+<img src="/2019/08/25/乐优商城/1567417968565.png">
+
+
+
 <p>妈的，这个鬼东西，花了我好多时间。刚刚开始，我就是想用阿里云的来配置的。去阿里云看了一下，有Nginx，并且能跑起来。但是，在Windows中，不能访问Nginx。我以为是Nginx安装有问题。</p>
 <p>后来，我就自己安装虚拟机，虚拟机安装好了，又用centos镜像安装，安装失败，镜像的问题，然后又去网上下载了一个镜像，安装成功。然后配置网络，让我本地的Windows能通过xshell访问虚拟机上的centos。访问成功后，过一段时间，又不能访问。后面又折腾回阿里云。在阿里云安装了好几次Nginx，都提示</p>
 <p>make[1]: Leaving directory `/usr/local/nginx-1.10.0’</p>
 <p>我以为有问题，实际是没有问题的。ps也能看到进程。</p>
 <p>最后，才怀疑端口的问题。最后，配置了端口之后，一切访问顺利！！！！！！！！</p>
 <p>如下所示，通过域名访问后台管理系统成功：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567421555465.png" alt="1567421555465"></p>
+<img src="/2019/08/25/乐优商城/1567421555465.png">
+
 <p>主要流程：浏览器访问<a href="http://manage.leyou.com/" target="_blank" rel="noopener">http://manage.leyou.com</a>，通过如下的映射，解析出Nginx的服务器地址，Nginx在根据80端口及manage.leyou.com匹配出需要转发的地址是<a href="http://192.168.1.104:9001，于是浏览器就直接访问这个地址了。" target="_blank" rel="noopener">http://192.168.1.104:9001，于是浏览器就直接访问这个地址了。</a></p>
 <p>host映射配置：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567421766263.png" alt="1567421766263"></p>
+<img src="/2019/08/25/乐优商城/1567421766263.png">
+
 <p>Nginx配置：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567421820572.png" alt="1567421820572"></p>
-<h4 id="URL是如何拼接的？"><a href="#URL是如何拼接的？" class="headerlink" title="URL是如何拼接的？"></a>URL是如何拼接的？</h4><p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567422759330.png" alt="1567422759330"></p>
+<img src="/2019/08/25/乐优商城/1567421820572.png">
+
+<h4 id="URL是如何拼接的？"><a href="#URL是如何拼接的？" class="headerlink" title="URL是如何拼接的？"></a>URL是如何拼接的？</h4><img src="/2019/08/25/乐优商城/1567422759330.png">
+
 <p>如图，在浏览器中，请求的是一个完整的URL，但是在vue项目中，只有后半部分URL。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567422833565.png" alt="1567422833565"></p>
+<img src="/2019/08/25/乐优商城/1567422833565.png">
+
 <p>他们是怎么拼接的呢？请看如下js文件：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567422887706.png" alt="1567422887706"></p>
+<img src="/2019/08/25/乐优商城/1567422887706.png">
+
+
+
 <h4 id="前端请求路劲是如何被后台拦截的？"><a href="#前端请求路劲是如何被后台拦截的？" class="headerlink" title="前端请求路劲是如何被后台拦截的？"></a>前端请求路劲是如何被后台拦截的？</h4><p>如下所示，前端中，单独独立一个${baseUrl}/api，主要是为了让网管zuul匹配上的</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423343626.png" alt="1567423343626"></p>
+<img src="/2019/08/25/乐优商城/1567423343626.png">
+
 <p>，zuul的配置如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423419909.png" alt="1567423419909"></p>
+<img src="/2019/08/25/乐优商城/1567423419909.png">
+
 <p>而/item/category是为了让item匹配到的</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423459387.png" alt="1567423459387"></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423524334.png" alt="1567423524334"></p>
+<img src="/2019/08/25/乐优商城/1567423459387.png">
+
+<img src="/2019/08/25/乐优商城/1567423524334.png">
+
 <p>然后，zuul就会把这个请求转发到商品微服务去：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423644766.png" alt="1567423644766"></p>
+<img src="/2019/08/25/乐优商城/1567423644766.png">
+
 <p>所以，url <a href="http://api.leyou.com/api/item/category/list?pid=0就是通过上述一步步被拆解出来的" target="_blank" rel="noopener">http://api.leyou.com/api/item/category/list?pid=0就是通过上述一步步被拆解出来的</a></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567423709506.png" alt="1567423709506"></p>
-<h4 id="Unable-to-round-trip-http-request-to-upstream-lookup"><a href="#Unable-to-round-trip-http-request-to-upstream-lookup" class="headerlink" title="Unable to round-trip http request to upstream: lookup"></a>Unable to round-trip http request to upstream: lookup</h4><p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567431520939.png" alt="1567431520939"></p>
+<img src="/2019/08/25/乐优商城/1567423709506.png">
+
+<h4 id="Unable-to-round-trip-http-request-to-upstream-lookup"><a href="#Unable-to-round-trip-http-request-to-upstream-lookup" class="headerlink" title="Unable to round-trip http request to upstream: lookup"></a>Unable to round-trip http request to upstream: lookup</h4><img src="/2019/08/25/乐优商城/1567431520939.png">
+
 <p>如图，无法访问，下面<a href="http://manage.leyou.com/#/index也无法访问。刚刚放完还好好的，不知道一下为啥就不行了。" target="_blank" rel="noopener">http://manage.leyou.com/#/index也无法访问。刚刚放完还好好的，不知道一下为啥就不行了。</a></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567431552434.png" alt="1567431552434"></p>
+<img src="/2019/08/25/乐优商城/1567431552434.png">
+
 <p>Google出来，原来是因为我开了蓝灯。我刚刚开了蓝灯，装了一个json插件，装完后，忘记关闭蓝灯了。</p>
 <p>退出蓝灯后，一切正常。</p>
 <p>参考：<a href="https://my.oschina.net/u/3964246/blog/2208060" target="_blank" rel="noopener">https://my.oschina.net/u/3964246/blog/2208060</a></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567431699871.png" alt="1567431699871"></p>
+<img src="/2019/08/25/乐优商城/1567431699871.png">
+
 <h4 id="sockjs-node-vue-项目一直出现-sockjs-node-info-t-1554978"><a href="#sockjs-node-vue-项目一直出现-sockjs-node-info-t-1554978" class="headerlink" title="/sockjs-node   vue 项目一直出现 sockjs-node/info?t=1554978"></a>/sockjs-node   vue 项目一直出现 sockjs-node/info?t=1554978</h4><p>参考<a href="https://blog.csdn.net/gulang03/article/details/89217273" target="_blank" rel="noopener">https://blog.csdn.net/gulang03/article/details/89217273</a></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567433442742.png" alt="1567433442742"></p>
+<img src="/2019/08/25/乐优商城/1567433442742.png">
+
+
+
 <p>cors解决跨域问题</p>
 <p>vo: view object 专门用来实现视图对象的</p>
 <p>当前页数，总条数，总页数，这几个信息构成一个对象，需要以实体的形式返回给前端，所以，我们在这里需要定义一个vo，返回给前端。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567470904725.png" alt="1567470904725"></p>
+<img src="/2019/08/25/乐优商城/1567470904725.png">
+
 <p>返回的list中，是一个通用对象，list里面装的有可能是品牌，也有可能是商品，所以使用泛型T。这里的PageResult就是一个自定义类。里面的属性total，totalPage的get，set方法通过lombok的@Data注解注入。</p>
 <p>流程：先分析页面需要什么，然后再写controller的代码，最后再写service 代码。</p>
 <p>分页查询需要做的步骤有：分页，过滤，排序，查询</p>
@@ -110,53 +158,85 @@
 <p>  //分页</p>
 <p> //会利用<code>mybatis</code>的拦截器对接下来的<code>sql</code>语句进行拦截，自动在该sql后面<strong>动态拼接sql语句</strong>，如分页方法中需要拼接<code>limit</code>语句<br>        PageHelper.startPage(page,rows);</p>
 <p>模糊插叙或者是精确查询：先在Navicat中写好sql语句，然后再在idea中拼接sql</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567472693228.png" alt="1567472693228"></p>
+<img src="/2019/08/25/乐优商城/1567472693228.png">
+
 <p>拼接好的语句如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567472833242.png" alt="1567472833242"></p>
+<img src="/2019/08/25/乐优商城/1567472833242.png">
+
 <p>三元表达式desc ? “ DESC” : “ ASC”</p>
 <p>如果前端传过来的desc 为true，则使用desc，否则，使用asc</p>
 <p>分页助手的使用；</p>
 <p>example；</p>
 <p>该配置是用来在控制台打印sql语句的</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567473395138.png" alt="1567473395138"></p>
+<img src="/2019/08/25/乐优商城/1567473395138.png">
+
+
+
 <p>pagination=true，搜索的时候，才会将页数强制置为1，这要才有搜索结果</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567474304899.png" alt="1567474304899"></p>
+<img src="/2019/08/25/乐优商城/1567474304899.png">
+
+
+
 <h4 id="品牌新增管理"><a href="#品牌新增管理" class="headerlink" title="品牌新增管理"></a>品牌新增管理</h4><p>流程分析：前端中，新增品牌，主要有几个参数：品牌名称，品牌首字母，品牌分类，品牌图片。所以，拿到这几个值之后，就可以写controller了。</p>
 <p>品牌新增管理，controller中无返回值，所以用Void，注意，V大写！！！</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567476741093.png" alt="1567476741093"></p>
+<img src="/2019/08/25/乐优商城/1567476741093.png">
+
 <p>下图的新增回显，是啥意思？？？！！！！</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567476995947.png" alt="1567476995947"></p>
+<img src="/2019/08/25/乐优商城/1567476995947.png">
+
 <p>图片上传</p>
 <p>写好配置文件，就开始写启动类，添加注解，@SpringBootApplication@EnableDiscoveryClient，然后写main方法。</p>
 <p>当我们做文件上传时，spring mvc 自动帮我们把上传的文件封装到对象MultipartFile中，我们就可以用MultipartFile来接受上传的文件，并且保存它。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567479178507.png" alt="1567479178507"></p>
-<h4 id="upload路径重复问题"><a href="#upload路径重复问题" class="headerlink" title="upload路径重复问题"></a>upload路径重复问题</h4><p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567480724203.png" alt="1567480724203"></p>
-<p>如图，在前端页面中，请求的路径是<a href="http://api.leyou.com/api/upload/image" target="_blank" rel="noopener">http://api.leyou.com/api/upload/image</a></p>
-<p>路径中，只有一个upload。但是我们的controller中有一个upload，</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567480855614.png" alt="1567480855614"></p>
+<img src="/2019/08/25/乐优商城/1567479178507.png">
+
+
+
+<h4 id="upload路径重复问题"><a href="#upload路径重复问题" class="headerlink" title="upload路径重复问题"></a>upload路径重复问题</h4><img src="/如图，在前端页面中，请求的路径是http:/api.leyou.com/api/upload/image" class="1567480724203.png%]}" title="路径中，只有一个upload。但是我们的controller中有一个upload， {%asset_img /2019/08/25/乐优商城/1567480855614.png">
+
 <p>zuul网关中也有一个upload，重复了</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567480992447.png" alt="1567480992447"></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567481056771.png" alt="1567481056771"></p>
+<img src="/2019/08/25/乐优商城/1567480992447.png">
+
+<img src="/2019/08/25/乐优商城/1567481056771.png">
+
+
+
+
+
 <p>Nginx 的rewrite功能</p>
 <p>在Nginx的配置文件中，增加rewrite。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567481522039.png" alt="1567481522039"></p>
+<img src="/2019/08/25/乐优商城/1567481522039.png">
+
+
+
+
+
 <p>Nginx中集成fastDFS：需要进入到Nginx目录，然后重新安装Nginx</p>
 <p>./configure  –add-module=/usr/local/softAndModuleForFastDFS/fastdfs-nginx-module/src </p>
 <p>我这里运行configure命令的时候，只加了 –add-module。没有像教程的加了那么多参数。</p>
 <p>如果已经安装了Nginx，则：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567488306679.png" alt="1567488306679"></p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567488631898.png" alt="1567488631898"></p>
+<img src="/2019/08/25/乐优商城/1567488306679.png">
+
+<img src="/2019/08/25/乐优商城/1567488631898.png">
+
 <p>如上图，说明fastDFS在Nginx中已经配置好了。</p>
 <p>文件上传测试</p>
 <p>修改修改/etc/fdfs路径c下的lient.conf配置</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567489750907.png" alt="1567489750907"></p>
+<img src="/2019/08/25/乐优商城/1567489750907.png">
+
 <p>将图片拷贝到tmp目录下</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567490053507.png" alt="1567490053507"></p>
+<img src="/2019/08/25/乐优商城/1567490053507.png">
+
 <p>如上图所示，图片测试上传成功。</p>
 <p>在浏览器中，测试图片是否能访问：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567490282582.png" alt="1567490282582"></p>
+<img src="/2019/08/25/乐优商城/1567490282582.png">
+
+
+
 <p>证明fastDFS已经搭建成功，以及FastDFS和Nginx的集成也已经成功。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567490437357.png" alt="1567490437357"></p>
+<img src="/2019/08/25/乐优商城/1567490437357.png">
+
+
+
 <p>把Nginx设置为开机启动</p>
 <p>1.vim /etc/init.d/nginx, 添加 下面xshell中的内容，保存之后，</p>
 <p>2.修改权限，chmod 755 /etc/init.d/nginx</p>
@@ -172,32 +252,79 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span>!/bin/sh</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span> nginx - this script starts and stops the nginx daemon</span><br><span class="line"><span class="meta">#</span></span><br><span class="line"><span class="meta">#</span> chkconfig:   - 85 15</span><br><span class="line"><span class="meta">#</span> description:  NGINX is an HTTP(S) server, HTTP(S) reverse \</span><br><span class="line"><span class="meta">#</span>               proxy and IMAP/POP3 proxy server</span><br><span class="line"><span class="meta">#</span> processname: nginx</span><br><span class="line"><span class="meta">#</span> config:      /etc/nginx/nginx.conf</span><br><span class="line"><span class="meta">#</span> config:      /etc/sysconfig/nginx</span><br><span class="line"><span class="meta">#</span> pidfile:     /var/run/nginx.pid</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Source function library.</span><br><span class="line">. /etc/rc.d/init.d/functions</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Source networking configuration.</span><br><span class="line">. /etc/sysconfig/network</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span> Check that networking is up.</span><br><span class="line">[ "$NETWORKING" = "no" ] &amp;&amp; exit 0</span><br><span class="line"></span><br><span class="line">nginx="/usr/local/nginx/sbin/nginx"</span><br><span class="line">prog=$(basename $nginx)</span><br><span class="line"></span><br><span class="line">NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"</span><br><span class="line"></span><br><span class="line">[ -f /etc/sysconfig/nginx ] &amp;&amp; . /etc/sysconfig/nginx</span><br><span class="line"></span><br><span class="line">lockfile=/var/lock/subsys/nginx</span><br><span class="line"></span><br><span class="line">make_dirs() &#123;</span><br><span class="line"><span class="meta">   #</span> make required directories</span><br><span class="line">   user=`$nginx -V 2&gt;&amp;1 | grep "configure arguments:.*--user=" | sed 's/[^*]*--user=\([^ ]*\).*/\1/g' -`</span><br><span class="line">   if [ -n "$user" ]; then</span><br><span class="line">      if [ -z "`grep $user /etc/passwd`" ]; then</span><br><span class="line">         useradd -M -s /bin/nologin $user</span><br><span class="line">      fi</span><br><span class="line">      options=`$nginx -V 2&gt;&amp;1 | grep 'configure arguments:'`</span><br><span class="line">      for opt in $options; do</span><br><span class="line">          if [ `echo $opt | grep '.*-temp-path'` ]; then</span><br><span class="line">              value=`echo $opt | cut -d "=" -f 2`</span><br><span class="line">              if [ ! -d "$value" ]; then</span><br><span class="line">                  # echo "creating" $value</span><br><span class="line">                  mkdir -p $value &amp;&amp; chown -R $user $value</span><br><span class="line">              fi</span><br><span class="line">          fi</span><br><span class="line">       done</span><br><span class="line">    fi</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">start() &#123;</span><br><span class="line">    [ -x $nginx ] || exit 5</span><br><span class="line">    [ -f $NGINX_CONF_FILE ] || exit 6</span><br><span class="line">    make_dirs</span><br><span class="line">    echo -n $"Starting $prog: "</span><br><span class="line">    daemon $nginx -c $NGINX_CONF_FILE</span><br><span class="line">    retval=$?</span><br><span class="line">    echo</span><br><span class="line">    [ $retval -eq 0 ] &amp;&amp; touch $lockfile</span><br><span class="line">    return $retval</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">stop() &#123;</span><br><span class="line">    echo -n $"Stopping $prog: "</span><br><span class="line">    killproc $prog -QUIT</span><br><span class="line">    retval=$?</span><br><span class="line">    echo</span><br><span class="line">    [ $retval -eq 0 ] &amp;&amp; rm -f $lockfile</span><br><span class="line">    return $retval</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">restart() &#123;</span><br><span class="line">    configtest || return $?</span><br><span class="line">    stop</span><br><span class="line">    sleep 1</span><br><span class="line">    start</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">reload() &#123;</span><br><span class="line">    configtest || return $?</span><br><span class="line">    echo -n $"Reloading $prog: "</span><br><span class="line">    killproc $nginx -HUP</span><br><span class="line">    RETVAL=$?</span><br><span class="line">    echo</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">force_reload() &#123;</span><br><span class="line">    restart</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">configtest() &#123;</span><br><span class="line"><span class="meta">  $</span>nginx -t -c $NGINX_CONF_FILE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rh_status() &#123;</span><br><span class="line">    status $prog</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">rh_status_q() &#123;</span><br><span class="line">    rh_status &gt;/dev/null 2&gt;&amp;1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">case "$1" in</span><br><span class="line">    start)</span><br><span class="line">        rh_status_q &amp;&amp; exit 0</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    stop)</span><br><span class="line">        rh_status_q || exit 0</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    restart|configtest)</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    reload)</span><br><span class="line">        rh_status_q || exit 7</span><br><span class="line">        $1</span><br><span class="line">        ;;</span><br><span class="line">    force-reload)</span><br><span class="line">        force_reload</span><br><span class="line">        ;;</span><br><span class="line">    status)</span><br><span class="line">        rh_status</span><br><span class="line">        ;;</span><br><span class="line">    condrestart|try-restart)</span><br><span class="line">        rh_status_q || exit 0</span><br><span class="line">            ;;</span><br><span class="line">    *)</span><br><span class="line">        echo $"Usage: $0 &#123;start|stop|status|restart|condrestart|try-restart|reload|force-reload|configtest&#125;"</span><br><span class="line">        exit 2</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
 
 <p>Nginx设置开机自启动：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567491430563.png" alt="1567491430563"></p>
+<img src="/2019/08/25/乐优商城/1567491430563.png">
+
 <p>检验Nginx开机自动启成功。</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567491732693.png" alt="1567491732693"></p>
+<img src="/2019/08/25/乐优商城/1567491732693.png">
+
+
+
 <h4 id="集成fastdfs-client"><a href="#集成fastdfs-client" class="headerlink" title="集成fastdfs-client"></a>集成fastdfs-client</h4><p>如下图，单元测试集成成功：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567493005780.png" alt="1567493005780"></p>
+<img src="/2019/08/25/乐优商城/1567493005780.png">
+
 <p>浏览器访问成功：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567493176805.png" alt="1567493176805"></p>
+<img src="/2019/08/25/乐优商城/1567493176805.png">
+
+
+
+
+
 <p>注解配置类的编写</p>
 <p>在上传文件的代码中，有两处地方是硬编码的，如下所示：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567496022173.png" alt="1567496022173"></p>
+<img src="/2019/08/25/乐优商城/1567496022173.png">
+
 <p>我们需要把这些硬编码的抽取到配置文件中，然后通过配置类来注入。</p>
 <p>首先，新建一个配置类，需要抽取出来的URL，allowTypes，就是类的属性，如下</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567496199451.png" alt="1567496199451"></p>
+<img src="/2019/08/25/乐优商城/1567496199451.png">
+
 <p>然后，在需要用到这两个属性的地方，在类中添加注解，然后再在类体自动注入：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567496336597.png" alt="1567496336597"></p>
+<img src="/2019/08/25/乐优商城/1567496336597.png">
+
+
+
 <p>Nginx 图片大小限制</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567497042024.png" alt="1567497042024"></p>
+<img src="/2019/08/25/乐优商城/1567497042024.png">
+
+
+
+
+
 <h4 id="502-Bad-Gateway"><a href="#502-Bad-Gateway" class="headerlink" title="502 Bad Gateway"></a>502 Bad Gateway</h4><p>使用api访问工具，上传图片，响应结果是502，如下图：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567497575563.png" alt="1567497575563"></p>
+<img src="/2019/08/25/乐优商城/1567497575563.png">
+
 <p>排查过程：首先怀疑是controller的问题，然后再controller中添加了日志，再试，还是502，然后把所有服务都重启，再试，还是502。还去看了域名，以及网关的配置，发现路径都没有问题（其实，网关根本就没有拦截图片路径）。</p>
 <p>看Nginx的日志，发现也报了502，如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567497772947.png" alt="1567497772947"></p>
+<img src="/2019/08/25/乐优商城/1567497772947.png">
+
 <p>最后看Nginx的配置文件，才发现是配置文件写错了。代理转发的地址错了。如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cnote_repo%5Cnote_repo%5Cimg%5C1567497842217.png" alt="1567497842217"></p>
+
+
 <p>正确地址如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567497906876.png" alt="1567497906876"></p>
+<img src="/2019/08/25/乐优商城/1567497906876.png">
+
+
+
 <p>由于修改了Nginx的配置文件，重新加载配置文件，再次上传图片，成功，如下：</p>
-<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567497997080.png" alt="1567497997080"></p>
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a><a class="next" href="/2019/08/25/Maven/">Maven</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/ssm/" style="font-size: 15px;">ssm</a> <a href="/tags/spring-junit/" style="font-size: 15px;">spring-junit</a> <a href="/tags/MuseScore/" style="font-size: 15px;">MuseScore</a> <a href="/tags/各种快捷键/" style="font-size: 15px;">各种快捷键</a> <a href="/tags/常用注解/" style="font-size: 15px;">常用注解</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/乐优商城/">乐优商城</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/SSM主流框架集成/">SSM主流框架集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/10/常用注解/">常用注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/Spring整合Junit配置/">Spring整合Junit配置 </a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/SpringMVC-Spring-Mybatis-整合/">SpringMVC Spring Mybatis 整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/常用快捷键/">常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<img src="/2019/08/25/乐优商城/1567497997080.png">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a><a class="next" href="/2019/08/25/Maven/">Maven</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/ssm/" style="font-size: 15px;">ssm</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/spring-junit/" style="font-size: 15px;">spring-junit</a> <a href="/tags/MuseScore/" style="font-size: 15px;">MuseScore</a> <a href="/tags/常用注解/" style="font-size: 15px;">常用注解</a> <a href="/tags/各种快捷键/" style="font-size: 15px;">各种快捷键</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/乐优商城/">乐优商城</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/SSM主流框架集成/">SSM主流框架集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/10/常用注解/">常用注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/Spring整合Junit配置/">Spring整合Junit配置 </a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/SpringMVC-Spring-Mybatis-整合/">SpringMVC Spring Mybatis 整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/常用快捷键/">常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
