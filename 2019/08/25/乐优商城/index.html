@@ -307,24 +307,40 @@
 <p>由于修改了Nginx的配置文件，重新加载配置文件，再次上传图片，成功，如下：</p>
 <img src="/2019/08/25/乐优商城/1567497997080.png">
 
+<h4 id="将图片导入到虚拟机中"><a href="#将图片导入到虚拟机中" class="headerlink" title="将图片导入到虚拟机中"></a>将图片导入到虚拟机中</h4><p>如数据库所示，存有很多图片，我们需要上传之后，web端才能正常显示：</p>
+<img src="/2019/08/25/乐优商城/1567502342203.png">
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a><a class="next" href="/2019/08/25/Maven/">Maven</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/ssm/" style="font-size: 15px;">ssm</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/spring-junit/" style="font-size: 15px;">spring-junit</a> <a href="/tags/MuseScore/" style="font-size: 15px;">MuseScore</a> <a href="/tags/常用注解/" style="font-size: 15px;">常用注解</a> <a href="/tags/各种快捷键/" style="font-size: 15px;">各种快捷键</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/乐优商城/">乐优商城</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/SSM主流框架集成/">SSM主流框架集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/10/常用注解/">常用注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/Spring整合Junit配置/">Spring整合Junit配置 </a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/SpringMVC-Spring-Mybatis-整合/">SpringMVC Spring Mybatis 整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/常用快捷键/">常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
+<p>上传image路径如下：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567502626420.png" alt="1567502626420"></p>
+<p>我们需要到Nginx中配置image的路径：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567502890686.png" alt="1567502890686"></p>
+<p>如上图所示，请求进来时，首先匹配第一个location，如果匹配不到，就匹配第二个location，然后再到相应路径取资源，保存配置文件，然后Nginx reload一下，在浏览器中访问图片，如下图所示：配置成功！！</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567502991145.png" alt="1567502991145"></p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567507838484.png" alt="1567507838484"></p>
+<p>规格参数这一个模块中，有两个数据库 表不存在，导致页面报错！！！</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567508662801.png" alt="1567508662801"></p>
+<h4 id="Elasticsearch的引入"><a href="#Elasticsearch的引入" class="headerlink" title="Elasticsearch的引入"></a>Elasticsearch的引入</h4><p>在前端搜索时，数据量大，查询速度慢—-&gt;引入Elasticsearch！！！</p>
+<p>用户访问我们的首页，一般都会直接搜索来寻找自己想要购买的商品。</p>
+<p>而商品的数量非常多，而且分类繁杂。如果能正确的显示出用户想要的商品，并进行合理的过滤，尽快促成交易，是搜索系统要研究的核心。</p>
+<p>面对这样复杂的搜索业务和数据量，使用传统数据库搜索就显得力不从心，一般我们都会使用全文检索技术，比如之前大家学习过的Solr。</p>
+<p>不过今天，我们要讲的是另一个全文检索技术：Elasticsearch。</p>
+<p>因为Kibana依赖于node，我们的虚拟机没有安装node，而window中安装过。所以我们选择在window下使用kibana</p>
+<p>出于安全考虑，Elasticsearch不能用root启动</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567521792628.png" alt="1567521792628"></p>
+<p>内存改256M</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567521951091.png" alt="1567521951091"></p>
+<p>切换root用户，属主修改成功，如下：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567522211122.png" alt="1567522211122"></p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567522268407.png" alt="1567522268407"></p>
+<p>配置好了之后，如下图，启动成功：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567522577452.png" alt="1567522577452"></p>
+<p>浏览器访问也成功了，如下图：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567522722454.png" alt="1567522722454"></p>
+<p>Kibana配置好并运行成功</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567523402098.png" alt="1567523402098"></p>
+<p>配置好分词器之后，重启elastic =：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567523932858.png" alt="1567523932858"></p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567524133034.png" alt="1567524133034"></p>
+<p>分词效果：</p>
+<p><img src="//yoursite.com/2019/08/25/乐优商城/D:%5Cblog%5Csource_posts%5C%E4%B9%90%E4%BC%98%E5%95%86%E5%9F%8E%5C1567524212468.png" alt="1567524212468"></p>
+</div><div class="tags"></div><div class="post-nav"><a class="pre" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a><a class="next" href="/2019/08/25/Maven/">Maven</a></div></div></div></div><div class="pure-u-1-4 hidden_mid_and_down"><div id="sidebar"><div class="widget"><form class="search-form" action="//www.google.com/search" method="get" accept-charset="utf-8" target="_blank"><input type="text" name="q" maxlength="20" placeholder="Search"><input type="hidden" name="sitesearch" value="http://yoursite.com"></form></div><div class="widget"><div class="widget-title"><i class="fa fa-folder-o"> 分类</i></div></div><div class="widget"><div class="widget-title"><i class="fa fa-star-o"> 标签</i></div><div class="tagcloud"><a href="/tags/Maven/" style="font-size: 15px;">Maven</a> <a href="/tags/SSM/" style="font-size: 15px;">SSM</a> <a href="/tags/Spring-MVC/" style="font-size: 15px;">Spring MVC</a> <a href="/tags/ssm/" style="font-size: 15px;">ssm</a> <a href="/tags/spring-junit/" style="font-size: 15px;">spring-junit</a> <a href="/tags/SpringBoot/" style="font-size: 15px;">SpringBoot</a> <a href="/tags/MuseScore/" style="font-size: 15px;">MuseScore</a> <a href="/tags/各种快捷键/" style="font-size: 15px;">各种快捷键</a> <a href="/tags/常用注解/" style="font-size: 15px;">常用注解</a></div></div><div class="widget"><div class="widget-title"><i class="fa fa-file-o"> 最近文章</i></div><ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/08/29/SpringBoot相关/">SpringBoot相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/乐优商城/">乐优商城</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/25/Maven/">Maven</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/15/吉他谱软件使用/">吉他谱软件使用</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/12/SSM主流框架集成/">SSM主流框架集成</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/10/常用注解/">常用注解</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/09/Spring整合Junit配置/">Spring整合Junit配置 </a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/SpringMVC-Spring-Mybatis-整合/">SpringMVC Spring Mybatis 整合</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/06/常用快捷键/">常用快捷键</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/08/05/Spring-MVC-基础第一天/">Spring MVC 基础第一天</a></li></ul></div><div class="widget"><div class="widget-title"><i class="fa fa-external-link"> 友情链接</i></div><ul></ul><a href="http://www.example1.com/" title="site-name1" target="_blank">site-name1</a><ul></ul><a href="http://www.example2.com/" title="site-name2" target="_blank">site-name2</a><ul></ul><a href="http://www.example3.com/" title="site-name3" target="_blank">site-name3</a></div></div></div><div class="pure-u-1 pure-u-md-3-4"><div id="footer">Copyright © 2019 <a href="/." rel="nofollow">gxnualbert.</a> Powered by<a rel="nofollow" target="_blank" href="https://hexo.io"> Hexo.</a><a rel="nofollow" target="_blank" href="https://github.com/tufu9441/maupassant-hexo"> Theme</a> by<a rel="nofollow" target="_blank" href="https://github.com/pagecho"> Cho.</a></div></div></div><a class="show" id="rocket" href="#top"></a><script type="text/javascript" src="/js/totop.js?v=0.0.0" async></script><script type="text/javascript" src="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js" async></script><script type="text/javascript" src="/js/fancybox.js?v=0.0.0" async></script><link rel="stylesheet" type="text/css" href="//lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css"><script type="text/javascript" src="/js/codeblock-resizer.js?v=0.0.0"></script><script type="text/javascript" src="/js/smartresize.js?v=0.0.0"></script></div></body></html>
